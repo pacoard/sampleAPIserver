@@ -1,0 +1,30 @@
+{
+  "name": "smarthomeserver",
+  "version": "1.0.0",
+  "description": "Sample API server with Nodejs and Express",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pacoard/sampleAPIserver.git"
+  },
+  "keywords": [
+    "API",
+    "NodeJS",
+    "Express",
+    "REST"
+  ],
+  "author": "pacoard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pacoard/sampleAPIserver/issues"
+  },
+  "homepage": "https://github.com/pacoard/sampleAPIserver#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  }
+}
