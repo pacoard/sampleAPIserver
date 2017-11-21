@@ -137,7 +137,7 @@ app.get(ACTUATOR_URL + '/toggleLight/kitchen', function(req, res) {
 		deviceType: "actuator",
 		status: "NOT OK",
 		deviceRole: "light switch",
-		data: "Kitchen lights off"
+		data: "error"
 	};
 	*/
 	console.log(messageJSON);
