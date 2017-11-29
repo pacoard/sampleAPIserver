@@ -75,6 +75,18 @@ function noiseEvent(event) {
 	eventActive = true;
 }
 
+// Actuators state
+var rooms = {
+	kitchen: false,
+	livingroom: false,
+	bedroom: false,
+	hall: false
+};
+var actuators = {
+	windows: rooms,
+	lights: rooms
+};
+
 ////////////////////////
 // HTTP-REST handling //
 ////////////////////////
@@ -124,24 +136,26 @@ app.get(SENSOR_URL + '/humidity', function(req, res) {
 });
 
 
-app.get(ACTUATOR_URL + '/toggleLight/kitchen', function(req, res) {
+app.get(ACTUATOR_URL + '/status', function(req, res) {
+	res.json(actuators);
+});
+
+
+app.get(ACTUATOR_URL + '/:switch((lights|windows))/:room((kitchen|livingroom|bedroom|hall))', function(req, res) {
 	console.log("GET");
-    var messageJSON = {
-		deviceType: "actuator",
-		status: "OK",
-		deviceRole: "light switch",
-		data: "Kitchen lights off"
-	};
-	/* // Error message example
-	var messageJSON = {
-		deviceType: "actuator",
-		status: "NOT OK",
-		deviceRole: "light switch",
-		data: "error"
-	};
-	*/
-	console.log(messageJSON);
-    res.send(JSON.stringify(messageJSON));
+
+	actuators[req.params.switch][req.params.room] = !actuators[req.params.switch][req.params.room];
+	var state = "";
+	if (actuators[req.params.switch][req.params.room]) {
+		if (req.params.switch == "lights") state = 'ON';
+		else state = 'opened';
+	} else {
+		if (req.params.switch == "lights") state = 'OFF';
+		else state = 'closed';
+	}
+
+	console.log(req.params.room + ' ' + req.params.switch + ' ' + state);
+    res.json(actuators);
 });
 
 app.get(ACTUATOR_URL + '/thermostat/:value(\\d+)', function(req, res) {
