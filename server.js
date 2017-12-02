@@ -16,7 +16,7 @@ function rand(low, high) {
 }
 var ttemp = 0;
 // Temperature
-var t_avg = 20;
+var t_avg = 75;
 const SLOPE_ITERATIONS = 3;
 var th = t_avg;
 var slope = 0;
@@ -76,15 +76,19 @@ function noiseEvent(event) {
 }
 
 // Actuators state
-var rooms = {
-	kitchen: false,
-	livingroom: false,
-	bedroom: false,
-	hall: false
-};
 var actuators = {
-	windows: rooms,
-	lights: rooms
+	windows: {
+		kitchen: false,
+		livingroom: false,
+		bedroom: false,
+		hall: false
+	},
+	lights: {
+		kitchen: false,
+		livingroom: false,
+		bedroom: false,
+		hall: false
+	}
 };
 
 ////////////////////////
@@ -169,6 +173,17 @@ app.get(ACTUATOR_URL + '/thermostat/:value(\\d+)', function(req, res) {
 	thermostat(parseInt(req.params.value)); //set thermostat to requested temperature
 	console.log(messageJSON);
     res.send(JSON.stringify(messageJSON));
+});
+
+app.get(ACTUATOR_URL + '/thermostat/value', function(req, res) {
+	console.log("GET");
+    var messageJSON = {
+		deviceType: "actuator",
+		status: "OK",
+		deviceRole: "thermostat",
+		data: th
+	};
+	res.json(messageJSON);
 });
 
 // Events simulation
