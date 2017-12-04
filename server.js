@@ -17,7 +17,7 @@ function rand(low, high) {
 var ttemp = 0;
 // Temperature
 var t_avg = 75;
-const SLOPE_ITERATIONS = 3;
+const SLOPE_ITERATIONS = 10;
 var th = t_avg;
 var slope = 0;
 function temperature() {
@@ -46,7 +46,7 @@ function thermostat(newValue) {
 
 // Humidity 
 function humidity() {
-	return 47 + rand(-3,3);
+	return 47 + rand(-2,2);
 }
 
 // Noise level
@@ -67,7 +67,7 @@ function noiseLevel() {
 			n_avg = TYPICAL_INDOOR_DECIBELS;
 		}
 	}
-	return n_avg + rand(-2,2);
+	return n_avg + rand(-1,1);
 }
 
 function noiseEvent(event) {
@@ -143,7 +143,6 @@ app.get(SENSOR_URL + '/humidity', function(req, res) {
 app.get(ACTUATOR_URL + '/status', function(req, res) {
 	res.json(actuators);
 });
-
 
 app.get(ACTUATOR_URL + '/:switch((lights|windows))/:room((kitchen|livingroom|bedroom|hall))', function(req, res) {
 	console.log("GET");
